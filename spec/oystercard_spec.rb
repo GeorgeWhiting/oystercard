@@ -20,4 +20,22 @@ describe Oystercard do
   	  expect(subject.deduct(5)).to eq(Oystercard::DEFAULT_STARTING_BALANCE - 5) 
   	end
   end
+  describe "#in_journey?" do
+  	it "should return false when not on a journey" do
+  	  expect(subject.in_journey?).to eq false
+  	end
+  end
+  describe "#touch_in" do
+  	it "should start a journey" do
+  	  subject.touch_in
+  	  expect(subject.in_journey?).to eq true
+  	end
+  end
+  describe "#touch_out" do
+  	it "should end a journey" do
+  	  subject.touch_in
+  	  subject.touch_out
+  	  expect(subject.in_journey?).to eq false
+  	end
+  end
 end

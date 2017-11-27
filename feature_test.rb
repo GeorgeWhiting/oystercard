@@ -10,3 +10,6 @@ rescue Exception => e
 end
 p card.balance
 p card.deduct (15)
+p card.in_journey?
+p card.touch_in
+p card.touch_out
