@@ -1,6 +1,7 @@
 class Oystercard
   DEFAULT_STARTING_BALANCE = 10
   DEFAULT_LIMIT = 90
+  DEFAULT_MINIMUM = 1
   attr_reader :balance
 
   def initialize
@@ -18,6 +19,7 @@ class Oystercard
   end
 
   def touch_in
+  	raise "Not enough pennies, poor Baggins-McGee" if not_enough?
     @in_journey = true				
   end
 
@@ -33,6 +35,10 @@ class Oystercard
 
   def too_much? amount
     @balance + amount > DEFAULT_LIMIT	
+  end
+
+  def not_enough?
+  	@balance < DEFAULT_MINIMUM
   end
 
 end

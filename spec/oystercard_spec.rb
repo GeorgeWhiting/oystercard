@@ -30,6 +30,10 @@ describe Oystercard do
   	  subject.touch_in
   	  expect(subject.in_journey?).to eq true
   	end
+  	it "shouldn't start a journey when card has less than £#{Oystercard::DEFAULT_MINIMUM}" do
+      subject.deduct(10)
+      expect{subject.touch_in}.to raise_error "Not enough pennies, poor Baggins-McGee"
+  	end
   end
   describe "#touch_out" do
   	it "should end a journey" do
