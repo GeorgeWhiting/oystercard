@@ -36,10 +36,15 @@ describe Oystercard do
   	end
   end
   describe "#touch_out" do
-  	it "should end a journey" do
+  	before do
   	  subject.touch_in
+    end
+  	it "should end a journey" do
   	  subject.touch_out
   	  expect(subject.in_journey?).to eq false
+  	end
+  	it "should charge a journey fare" do 	  
+  		expect {subject.touch_out}.to change {subject.balance}.by(-Oystercard::DEFAULT_MINIMUM)
   	end
   end
 end

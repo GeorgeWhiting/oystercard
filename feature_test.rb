@@ -14,4 +14,12 @@ p card.in_journey?
 p card.touch_in
 p card.touch_out
 p card.deduct (15)
+begin 
+	 card.touch_in
+rescue Exception => e 
+	p e.message
+end
+p card.top_up (10)
 p card.touch_in
+p card.touch_out
+p card.balance
