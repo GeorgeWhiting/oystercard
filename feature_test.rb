@@ -1,8 +1,8 @@
 require "./lib/oystercard"
 require "./lib/station"
 p card = Oystercard.new
-p station = Station.new
-p station_two = Station.new
+p station = Station.new("waterloo", :two)
+#p station_two = Station.new
 # p card.balance
 # p card.top_up(20)
 # p card.balance
@@ -31,7 +31,10 @@ p station_two = Station.new
 # p card.touch_in(station)
 # p card.entry_station
 
-p card.touch_in(station)
-p card.entry_station
-p card.touch_out(station_two)
-p card
+# p card.touch_in(station)
+# p card.entry_station
+# p card.touch_out(station_two)
+# p card
+
+p station.name
+p station.zone
