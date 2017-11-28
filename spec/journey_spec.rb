@@ -6,12 +6,10 @@ describe Journey do
 
   describe "#record_journey" do
     it "should print out the list of journeys" do
-      station_two = double(:station_two)
       subject.start (station)
-      subject.finish (station_two)
-      expect(subject.journeys[0].values).to include (station) and include (station_two)
+      subject.finish (station)
+      expect(subject.journeys[0].values).to include (station)
     end
-
     it "should be empty when the card is created" do
       expect(subject.journeys).to be_empty
     end

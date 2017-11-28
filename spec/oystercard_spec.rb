@@ -17,7 +17,6 @@ describe Oystercard do
   	  expect{subject.top_up(100)}.to raise_error("Max £#{Oystercard::DEFAULT_LIMIT}, fool")
   	end
   end
-
   describe "#touch_in" do
   	it "shouldn't start a journey when card has less than £#{Oystercard::DEFAULT_MINIMUM}" do
       10.times do

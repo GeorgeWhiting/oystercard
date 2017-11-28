@@ -9,20 +9,11 @@ attr_reader :journeys
   end
 
   def start station
-    if entry_station.nil?
-      self.entry_station = station
-    else
-      exit_station = nil
-      record_journey
-    end
+    entry_station.nil? ? self.entry_station = station : (exit_station = nil; record_journey)
   end
 
   def finish station
-    if exit_station.nil?
-      self.exit_station = station
-    else
-      entry_station = nil
-    end
+    exit_station.nil? ? self.exit_station = station : entry_station = nil
     record_journey
   end
 
@@ -46,10 +37,6 @@ attr_reader :journeys
   end
 
   def fare
-    if complete?
-      MINIMUM_FARE
-    else
-      6
-    end
+    complete? ? MINIMUM_FARE : 6
   end
 end
