@@ -1,7 +1,7 @@
 require 'oystercard'
 
 describe Oystercard do
-  subject {Oystercard.new}
+  subject {Oystercard.new(Journey.new)}
   let :station {double(:station)}
 
   describe "#balance" do
@@ -25,6 +25,10 @@ describe Oystercard do
       end
       expect{subject.touch_in(station)}.to raise_error "Not enough pennies, poor Baggins-McGee"
   	end
+    it "should start a journey" do
+      subject.touch_in (station)
+      expect(subject.in_journey?).to eq true
+    end
   end
   describe "#touch_out(station)" do
   	before do
@@ -33,5 +37,25 @@ describe Oystercard do
   	it "should charge a journey fare" do
   		expect {subject.touch_out(station)}.to change {subject.balance}.by(-Oystercard::DEFAULT_MINIMUM)
   	end
+    it "should end a journey" do
+      subject.touch_out(station)
+      expect(subject.in_journey?).to eq false
+    end
+    it "should forget entry station" do
+      expect {subject.touch_out(station)}.to change {subject.journey.entry_station}.to eq nil
+    end
+  end
+  describe "#record_journey" do
+    it "should print out the list of journeys" do
+      subject.touch_in (station)
+      subject.touch_out (station)
+      expect(subject.journeys[0].entry_station).to eq(station)
+    end
+    it "should be empty when the card is created" do
+      expect(subject.journeys).to be_empty
+    end
+  end
+  it "should return false when not on a journey" do
+    expect(subject.in_journey?).to eq false
   end
 end

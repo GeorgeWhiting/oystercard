@@ -32,8 +32,8 @@ p station_two = Station.new("Bank", :one)
 # p card.entry_station
 #
 p card.touch_in(station)
+puts
 p card.touch_out(station)
-p card.journey.journeys
-# p card.journey.entry_station
-# p card.touch_out(station_two)
-# p card
+puts
+
+p card.journey.fare
