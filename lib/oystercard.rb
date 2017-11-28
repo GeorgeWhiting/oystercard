@@ -22,7 +22,7 @@ class Oystercard
   end
 
   def touch_out station
-  	@balance -= DEFAULT_MINIMUM
+  	deduct(DEFAULT_MINIMUM)
     @journey.finish station
   end
 

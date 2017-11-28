@@ -50,4 +50,15 @@ describe Journey do
   		expect(subject.entry_station).to eq station
   	end
   end
+  describe "#complete?" do
+    it 'knows that a journey is complete' do
+      subject.start(station)
+      subject.finish(station)
+      expect(subject).to be_complete
+    end
+    it 'knows that a journey is not complete' do
+      subject.finish(station)
+      expect(subject).to_not be_complete
+    end
+  end
 end
