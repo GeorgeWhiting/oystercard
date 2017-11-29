@@ -16,28 +16,34 @@ describe Journey do
       subject.start(station)
       expect(subject.fare).to eq 6
     end
+    it "should be the pentalty fare by default" do
+      expect(subject.fare).to eq 6
+    end
   end
-  describe "#start" do
-    it "should remember the station" do
-      expect{subject.start(station)}.to change {subject.entry_station}.to eq station
+  describe "#complete?"do
+    it "should return false when journey is incomplete" do
+      expect(subject).to_not be_complete
+    end
+    it "knows when a journey is complete" do
+      subject.start(station)
+      subject.finish(station)
     end
   end
   describe "#finish" do
     before do
       subject.start(station)
+      subject.finish(station)
+    end
+    it "should return the exit station" do
+      expect(subject.exit_station).to eq station
     end
   end
-  describe "#complete?"do
-    it "should return false when journey is incomplete" do
-      subject.start(station)
-      expect(subject).to_not be_complete
-    end
-  end
-  describe "#entry_station" do
-    before do
-      subject.start(station)
+  describe "#start" do
+    it "should remember the station" do
+      expect{subject.start(station)}.to change {subject.entry_station}.to eq station
     end
     it "returns the entry station" do
+      subject.start(station)
       expect(subject.entry_station).to eq station
     end
   end

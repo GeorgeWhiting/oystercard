@@ -19,26 +19,25 @@ class Oystercard
   end
 
   def touch_in station
-    if in_journey?
-      journey.exit_station = nil
-      record_journey
-      deduct(journey.fare)
-      raise "Not enough pennies, poor Baggins-McGee" if not_enough?
-      @journey = Journey.new
-      journey.start station
-    else
-      raise "Not enough pennies, poor Baggins-McGee" if not_enough?
-      @journey = Journey.new
-      journey.start station
-    end
+    finish_deduct_record(nil) if in_journey?
+    start_new_journey(station)
   end
 
   def touch_out station
-    @journey.finish station
+    finish_deduct_record station
+    @journey = Journey.new
+  end
+
+  def start_new_journey station
+    raise "Not enough pennies, poor Baggins-McGee" if not_enough?
+    @journey = Journey.new
+    journey.start station
+  end
+
+  def finish_deduct_record station
+    journey.finish station
     record_journey
     deduct(journey.fare)
-    #p journey.fare
-    @journey = Journey.new
   end
 
   def record_journey
@@ -49,11 +48,13 @@ class Oystercard
     journey.entry_station ? true : false
   end
 
-  private
-
   def deduct amount
     @balance -= amount
   end
+
+  private
+
+
 
   def too_much? amount
     @balance + amount > DEFAULT_LIMIT

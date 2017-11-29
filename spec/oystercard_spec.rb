@@ -58,7 +58,9 @@ describe Oystercard do
       expect(subject.journeys).to be_empty
     end
   end
-  it "should return false when not on a journey" do
-    expect(subject.in_journey?).to eq false
+  describe "#in_journey?" do
+    it "should return false when not on a journey" do
+      expect(subject.in_journey?).to eq false
+    end
   end
 end
