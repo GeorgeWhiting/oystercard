@@ -51,6 +51,9 @@ describe Oystercard do
       subject.touch_out (station)
       expect(subject.journeys[0].entry_station).to eq(station)
     end
+    it "should record journeys" do
+      expect(subject.record_journey).to_not eq nil
+    end
     it "should be empty when the card is created" do
       expect(subject.journeys).to be_empty
     end

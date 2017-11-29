@@ -13,6 +13,10 @@ attr_accessor :entry_station, :exit_station
   end
 
   def fare
-    (@entry_station && @exit_station) ? MINIMUM_FARE : 6
+    complete? ? MINIMUM_FARE : 6
+  end
+
+  def complete?
+    entry_station && exit_station
   end
 end

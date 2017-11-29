@@ -17,10 +17,6 @@ describe Journey do
       expect(subject.fare).to eq 6
     end
   end
-
-  describe "#in_journey?" do
-
-  end
   describe "#start" do
     it "should remember the station" do
       expect{subject.start(station)}.to change {subject.entry_station}.to eq station
@@ -29,6 +25,12 @@ describe Journey do
   describe "#finish" do
     before do
       subject.start(station)
+    end
+  end
+  describe "#complete?"do
+    it "should return false when journey is incomplete" do
+      subject.start(station)
+      expect(subject).to_not be_complete
     end
   end
   describe "#entry_station" do
