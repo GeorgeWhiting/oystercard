@@ -27,6 +27,7 @@ describe Journey do
     it "knows when a journey is complete" do
       subject.start(station)
       subject.finish(station)
+      expect(subject).to be_complete
     end
   end
   describe "#finish" do
