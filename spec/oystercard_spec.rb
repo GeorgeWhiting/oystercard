@@ -3,6 +3,9 @@ require 'oystercard'
 describe Oystercard do
   subject {Oystercard.new(Journey.new)}
   let :station {double(:station)}
+  before do
+    subject.top_up(20)
+  end
 
   describe "#balance" do
     it "should return a balance" do
@@ -11,7 +14,7 @@ describe Oystercard do
   end
   describe "#top_up" do
   	it "should accept a top up" do
-  	  expect(subject.top_up(20)).to eq(Oystercard::DEFAULT_STARTING_BALANCE + 20)
+  	  expect(subject.top_up(20)).to eq(Oystercard::DEFAULT_STARTING_BALANCE + 40)
   	end
   	it "should not be able to go above limit" do
   	  expect{subject.top_up(100)}.to raise_error("Max £#{Oystercard::DEFAULT_LIMIT}, fool")
@@ -19,10 +22,7 @@ describe Oystercard do
   end
   describe "#touch_in" do
   	it "shouldn't start a journey when card has less than £#{Oystercard::DEFAULT_MINIMUM}" do
-      10.times do
-      	subject.touch_in(station)
-      	subject.touch_out(station)
-      end
+      subject = Oystercard.new
       expect{subject.touch_in(station)}.to raise_error "Not enough pennies, poor Baggins-McGee"
   	end
     it "should start a journey" do
@@ -37,10 +37,7 @@ describe Oystercard do
   	it "should charge a journey fare" do
   		expect {subject.touch_out(station)}.to change {subject.balance}.by(-Oystercard::DEFAULT_MINIMUM)
   	end
-    it "should end a journey" do
-      subject.touch_out(station)
-      expect(subject.in_journey?).to eq false
-    end
+
     it "should forget entry station" do
       expect {subject.touch_out(station)}.to change {subject.journey.entry_station}.to eq nil
     end
@@ -60,6 +57,10 @@ describe Oystercard do
   end
   describe "#in_journey?" do
     it "should return false when not on a journey" do
+      expect(subject.in_journey?).to eq false
+    end
+    it "should end a journey" do
+      subject.touch_out(station)
       expect(subject.in_journey?).to eq false
     end
   end

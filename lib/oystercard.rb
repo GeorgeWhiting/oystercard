@@ -1,7 +1,7 @@
 require_relative 'station'
 require_relative 'journey'
 class Oystercard
-  DEFAULT_STARTING_BALANCE = 10
+  DEFAULT_STARTING_BALANCE = 0
   DEFAULT_LIMIT = 90
   DEFAULT_MINIMUM = 1
   attr_reader :balance, :journey, :journeys
@@ -25,23 +25,22 @@ class Oystercard
 
   def touch_out station
     finish_deduct_record station
-    @journey = Journey.new
   end
 
   def start_new_journey station
     raise "Not enough pennies, poor Baggins-McGee" if not_enough?
-    @journey = Journey.new
     journey.start station
   end
 
   def finish_deduct_record station
     journey.finish station
-    record_journey
     deduct(journey.fare)
+    record_journey
   end
 
   def record_journey
     journeys << journey
+    @journey = Journey.new
   end
 
   def in_journey?
