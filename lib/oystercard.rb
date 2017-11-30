@@ -7,10 +7,9 @@ class Oystercard
   attr_reader :balance, :journey, :journeys
   attr_accessor :entry_station, :exit_station
 
-  def initialize(journey = Journey.new)
+  def initialize(journeylog = Journeylog.new)
     @balance = DEFAULT_STARTING_BALANCE
-    @journeys = []
-    @journey = journey
+    @journeylog = journeylog
   end
 
   def top_up amount
@@ -19,32 +18,12 @@ class Oystercard
   end
 
   def touch_in station
-    finish_deduct_record(nil) if in_journey?
-    start_new_journey(station)
+    raise "Not enough pennies, poor Baggins-McGee" if not_enough?
+    deduct @journeylog.start(station)
   end
 
   def touch_out station
-    finish_deduct_record station
-  end
-
-  def start_new_journey station
-    raise "Not enough pennies, poor Baggins-McGee" if not_enough?
-    journey.start station
-  end
-
-  def finish_deduct_record station
-    journey.finish station
-    deduct(journey.fare)
-    record_journey
-  end
-
-  def record_journey
-    journeys << journey
-    @journey = Journey.new
-  end
-
-  def in_journey?
-    journey.entry_station ? true : false
+    deduct @journeylog.finish(station)
   end
 
   def deduct amount
