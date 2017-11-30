@@ -3,9 +3,9 @@ require "./lib/station"
 p card = Oystercard.new
 p station = Station.new("Highgate", 3)
 p station_two = Station.new("Bank", 1)
-
+p station_three = Station.new("Russia", 6)
 p card.balance
-p card.top_up(20)
+p card.top_up(25)
 # p card.balance
 # begin
 # 	card.top_up(100)
@@ -25,10 +25,20 @@ p card.top_up(20)
 # 	p e.message
 # end
 # p card.top_up (20)
-p card.touch_in station
+# p card.touch_in station
+# p card.balance
+# p card.touch_out station_two
+# p card.touch_in station
+# p card.balance
+# p card.touch_out station_three
 p card.balance
+
+p card.touch_out station_two
+p card.touch_out station_two
+p card.touch_out station_two
+p card.touch_out station_two
 p card.touch_out station_two
 
-# p card.touch_in station
-p card.balance
+
+
 p card.return_journeys

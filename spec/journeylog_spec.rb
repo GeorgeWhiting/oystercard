@@ -23,7 +23,7 @@ describe Journeylog do
     it "return a list of journeys" do
       subject.start(station)
       subject.finish(station)
-      expect(subject.return_journeys).to include journey
+      expect(subject.return_journeys).to_not be_empty
     end
   end
   describe "#in_journey?" do

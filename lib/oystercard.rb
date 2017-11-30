@@ -1,5 +1,4 @@
-require_relative 'station'
-require_relative 'journey'
+require_relative 'journeylog'
 class Oystercard
   DEFAULT_STARTING_BALANCE = 0
   DEFAULT_LIMIT = 90

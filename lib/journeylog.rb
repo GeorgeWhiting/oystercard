@@ -1,8 +1,9 @@
+require_relative 'journey'
 class Journeylog
-
   def initialize(journey_class = Journey)
     @journey_class = journey_class
     @journeys = []
+    @journey = current_journey
   end
 
   def start station
@@ -20,23 +21,21 @@ class Journeylog
     fare
   end
 
-  def current_journey
-    if !@journey || @journey.complete?
-      @journey_class.new
-    else
-      @journey.clone
-    end
-  end
-
   def return_journeys
     @journeys.dup
   end
 
-  def record_journey
-    @journeys << @journey
-  end
-
   def in_journey?
     @journey.entry_station ? true : false
+  end
+
+  private
+
+  def current_journey
+    !@journey || @journey.complete? ? @journey_class.new : @journey.clone
+  end
+
+  def record_journey
+    @journeys << @journey
   end
 end
