@@ -2,18 +2,28 @@ require 'journey'
 
 describe Journey do
 
-  let :station {double(:station)}
+  let :station {double(:station, name: "Aldgate", zone: 1)}
+  let :station2 {double(:station, name: "Chalfont and Latimer", zone: 8)}
+  let :station3 {double(:station, name: "Baker Street", zone: 1)}
   subject {Journey.new}
 
   describe "#fare" do
-    it "should return minimum fare when the journey is complete" do
+    it "should return the fare when the journey is complete" do
       subject.start(station)
-      subject.finish(station)
-      expect(subject.fare).to eq Journey::MINIMUM_FARE
+      subject.finish(station2)
+      expect(subject.fare).to eq 8
+    
+      subject.start(station)
+      subject.finish(station3)
+      expect(subject.fare).to eq 1
     end
     it "should return penalty fare when the journey is incomplete" do
       subject.start(station)
       subject.start(station)
+      expect(subject.fare).to eq 6
+    end
+     it "should return penalty fare when the journey wasn't started" do
+      subject.finish(station)
       expect(subject.fare).to eq 6
     end
     it "should be the pentalty fare by default" do

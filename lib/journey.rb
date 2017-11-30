@@ -13,7 +13,7 @@ attr_accessor :entry_station, :exit_station
   end
 
   def fare
-    complete? ? MINIMUM_FARE : 6
+    complete? ? 1 + (entry_station.zone - exit_station.zone).abs : 6
   end
 
   def complete?
