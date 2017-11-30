@@ -29,7 +29,7 @@ class Journeylog
   end
 
   def return_journeys
-    @journeys
+    @journeys.dup
   end
 
   def record_journey

@@ -3,6 +3,7 @@ require "./lib/station"
 p card = Oystercard.new
 p station = Station.new("waterloo", :two)
 p station_two = Station.new("Bank", :one)
+
 p card.balance
 p card.top_up(20)
 # p card.balance
@@ -33,4 +34,4 @@ p card.touch_in station
 p card.balance
 p card.touch_out station
 p card.balance
-p card.journeys
+p card.return_journeys

@@ -4,8 +4,7 @@ class Oystercard
   DEFAULT_STARTING_BALANCE = 0
   DEFAULT_LIMIT = 90
   DEFAULT_MINIMUM = 1
-  attr_reader :balance, :journey, :journeys
-  attr_accessor :entry_station, :exit_station
+  attr_reader :balance
 
   def initialize(journeylog = Journeylog.new)
     @balance = DEFAULT_STARTING_BALANCE
@@ -26,13 +25,15 @@ class Oystercard
     deduct @journeylog.finish(station)
   end
 
-  def deduct amount
-    @balance -= amount
+  def return_journeys
+    @journeylog.return_journeys
   end
 
   private
 
-
+  def deduct amount
+    @balance -= amount
+  end
 
   def too_much? amount
     @balance + amount > DEFAULT_LIMIT
