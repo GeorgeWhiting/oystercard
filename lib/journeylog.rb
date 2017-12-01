@@ -6,15 +6,15 @@ class Journeylog
     @journey = current_journey
   end
 
-  def start station
-   @journey = current_journey
-   fare = in_journey? ? @journey.fare : 0
-   record_journey
-   @journey.start station
-   fare
+  def start(station)
+    @journey = current_journey
+    fare = in_journey? ? @journey.fare : 0
+    record_journey
+    @journey.start station
+    fare
   end
 
-  def finish station
+  def finish(station)
     @journey.finish station
     fare = @journey.fare
     @journey = current_journey
